@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-//@RestController
-//@RequestMapping("/wx/cp/portal/{agentId}")
+@RestController
+@RequestMapping("/wx/cp/portal/{agentId}")
 @Slf4j
 public class WxPortalController {
   @GetMapping(produces = "text/plain;charset=utf-8")
