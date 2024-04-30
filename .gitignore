@@ -5,3 +5,5 @@
 application.yml
 /.idea/
 *.iml
+/weixin-java-cp-demo.ipr
+/weixin-java-cp-demo.iws
