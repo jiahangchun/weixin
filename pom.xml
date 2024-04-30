@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -89,6 +90,7 @@
     </build>
 
 
+    <!--配置教程 https://blog.csdn.net/BThinker/article/details/123688143-->
     <repositories>
         <repository>
             <id>maven-public</id>
@@ -128,36 +130,5 @@
         </snapshotRepository>
     </distributionManagement>
 
-
-
-
-<!--    <repositories>-->
-<!--        &lt;!&ndash; 配置nexus远程仓库 &ndash;&gt;-->
-<!--        <repository>-->
-<!--            <id>nexus</id>-->
-<!--            <name>Nexus Snapshot Repository</name>-->
-<!--            <url>http://nexus.jiahangchun.icu:9001/repository/maven-public/</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </repositories>-->
-<!--    &lt;!&ndash; 配置从哪个仓库中下载构件，即jar包 &ndash;&gt;-->
-<!--    <pluginRepositories>-->
-<!--        <pluginRepository>-->
-<!--            <id>nexus</id>-->
-<!--            <name>Nexus Snapshot Repository</name>-->
-<!--            <url>http://nexus.jiahangchun.icu:9001/repository/maven-public/</url>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </pluginRepository>-->
-<!--    </pluginRepositories>-->
 
 </project>
