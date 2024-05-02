@@ -84,4 +84,3 @@ jobs:
             echo '定位到具体的地点'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh start.sh
             echo '启动项目'
-            exec bash
