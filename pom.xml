@@ -16,7 +16,7 @@
     <packaging>jar</packaging>
 
     <name>spring-boot-demo-for-wechat-cp</name>
-    <description>Spring Boot Demo with wechat CP</description>
+    <description>測試包</description>
 
     <properties>
         <weixin-java-cp.version>4.6.0</weixin-java-cp.version>
