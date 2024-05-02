@@ -6,5 +6,5 @@ FROM openjdk:17-jdk-alpine
 ARG VERSION=1.0.0-SNAPSHOT
 RUN mkdir "/app"
 WORKDIR /app
-COPY ./target/demo-${SNAPSHOT_VERSION}-SNAPSHOT.jar /app/app.jar
+COPY ./target/demo-${VERSION}.jar /app/app.jar
 CMD ["java","-jar","/app/app.jar"]
