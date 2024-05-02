@@ -1,0 +1,22 @@
+version: '3'
+services:
+    web:
+        image: test3
+        ports:
+            - "9303:8080"
+
+
+# 创建镜像
+# docker build -t test1 .
+
+# 查看镜像
+# docker images
+
+# 启动docker，按照docker compose启动
+# docker-compose up -d
+
+# 排查问题
+# docker ps 查看当前容器
+# docker images 查看当前镜像
+# docker log <contain_id> 查看当前日志
+

@@ -1,8 +1,15 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk
+MAINTAINER jiahangchun
+
 # docker build --build-arg SNAPSHOT_VERSION=0.0.2-SNAPSHOT -t myapp:latest .
-# 通過git action 指定版本號
-ARG VERSION=1.0.0-SNAPSHOT
-RUN mkdir "/app"
-WORKDIR /app
-COPY ./target/demo-${VERSION}.jar /app/app.jar
-CMD ["java","-jar","/app/app.jar"]
+ARG PORT=8080
+
+
+RUN echo "用户 ""$USER"" 打包文件"
+ADD target/*.jar /app.jar
+#查看是否存在app.jar文件
+RUN bash -c 'touch /app.jar'
+RUN chmod 777 /app.jar
+
+EXPOSE ${PORT}
+CMD ["java","-jar","/app.jar"]
