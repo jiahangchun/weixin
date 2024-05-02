@@ -80,6 +80,7 @@ jobs:
             pwd
             echo '定位到需要执行命令的工程地址'
             docker login -u jiahangchun -p ${{ secrets.GITHUB_TOKEN }} https://ghcr.io
+            echo '设置登陆'
             docker pull ghcr.io/jiahangchun/weixin:main
             echo '拉最新的镜像'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh start.sh
