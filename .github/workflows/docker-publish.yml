@@ -69,12 +69,6 @@ jobs:
           username: ${{ secrets.REMOTE_USER_NAME }} # 服务器用户名称；需要去仓库的 settings/secrets/actions 去创建
           password: ${{ secrets.REMOTE_PASSWORD }} # 服务器密码；需要去仓库的 settings/secrets/actions 去创建
           port: ${{ secrets.REMOTE_PORT }} # 服务器端口，默认22；需要去仓库的 settings/secrets/actions 去创建
-          # 1.停止/删除 服务
-          # 2. 删除本地镜像
-          # 3. 拉最新的镜像
-          # 4. 定位到action目录 /home/jiahangchun/code/action_file
-          # 5. （废弃）docker run -dp 9115:80  --restart=always --name weixin_service ghcr.io/jiahangchun/weixin:main
-          # 5. 通过docker compose 启动服务
           script: |
             echo '开始执行命令'
             docker stop weixin_service
@@ -91,5 +85,3 @@ jobs:
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh start.sh
             echo '启动项目'
             exec bash
-
-
