@@ -76,11 +76,14 @@ jobs:
             echo '停止/删除 服务'
             docker rmi ghcr.io/jiahangchun/weixin:main
             echo '删除本地镜像'
+            cd ${{ secrets.REMOTE_FILE_TARGET }}/nas_tool
+            pwd
+            echo '定位到需要执行命令的工程地址'
             docker login -u jiahangchun -p ${{ secrets.GITHUB_TOKEN }} https://ghcr.io
             docker pull ghcr.io/jiahangchun/weixin:main
             echo '拉最新的镜像'
-            cd ${{ secrets.REMOTE_FILE_TARGET }}/nas_tool
-            pwd
-            echo '定位到具体的地点'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh start.sh
             echo '启动项目'
+
+      - name: 程序执行完成
+        run: echo 'success'
