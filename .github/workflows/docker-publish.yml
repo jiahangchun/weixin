@@ -78,9 +78,9 @@ jobs:
           script: |
             echo '开始执行命令'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker stop weixin_service
-            docker rm weixin_service
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker rm weixin_service
             echo '停止/删除 服务'
-            docker rmi ghcr.io/jiahangchun/weixin:main
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker rmi ghcr.io/jiahangchun/weixin:main
             echo '删除本地镜像'
             
       - name: 下载镜像
@@ -89,12 +89,14 @@ jobs:
           host: ${{ secrets.REMOTE_IP_ADDRESS }} # 服务器ip地址 ; 需要去仓库的 settings/secrets/actions 去创建
           username: ${{ secrets.REMOTE_USER_NAME }} # 服务器用户名称；需要去仓库的 settings/secrets/actions 去创建
           password: ${{ secrets.REMOTE_PASSWORD }} # 服务器密码；需要去仓库的 settings/secrets/actions 去创建
-          port: ${{ secrets.REMOTE_PORT }} # 服务器端口，默认22；需要去仓库的 settings/secrets/actions 去创建 # docker login -u jiahangchun -p ${{ secrets.GITHUB_TOKEN }} https://ghcr.io
+          port: ${{ secrets.REMOTE_PORT }} # 服务器端口，默认22；需要去仓库的 settings/secrets/actions 去创建 # 
           script: |
             cd ${{ secrets.REMOTE_FILE_TARGET }}/nas_tool
             pwd
             echo '定位到需要执行命令的工程地址'
-            docker pull ghcr.io/jiahangchun/weixin:main
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker login -u jiahangchun -p ${{ secrets.GITHUB_TOKEN }} https://ghcr.io
+            echo '登陆'
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker pull ghcr.io/jiahangchun/weixin:main
             echo '拉最新的镜像完成'
             
             
