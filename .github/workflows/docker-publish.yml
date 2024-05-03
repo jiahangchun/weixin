@@ -63,6 +63,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: build-and-push-image
     permissions:
       contents: read
       packages: write
@@ -82,6 +83,7 @@ jobs:
             echo '停止/删除 服务'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker rmi ghcr.io/jiahangchun/weixin:main
             echo '删除本地镜像'
+            exec bash
             
       - name: 下载镜像
         uses: appleboy/ssh-action@v0.1.10
@@ -98,6 +100,7 @@ jobs:
             echo '登陆'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker pull ghcr.io/jiahangchun/weixin:main
             echo '拉最新的镜像完成'
+            exec bash
             
             
       - name: 启动项目
@@ -110,6 +113,7 @@ jobs:
           script: |
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh start.sh
             echo '启动项目'
+            exec bash
 
 
       - name: 程序执行完成
