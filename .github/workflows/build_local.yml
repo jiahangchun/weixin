@@ -30,9 +30,6 @@ jobs:
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-      - name: maven创建打包
-        run: mvn -B package --file pom.xml
-
       - name: 将文件转移到服务器
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:  
@@ -41,7 +38,7 @@ jobs:
           port: '${{ secrets.REMOTE_PORT }}'
           password: '${{ secrets.REMOTE_PASSWORD }}'
           local_path: './*'
-          remote_path: '${{ secrets.REMOTE_FILE_TARGET }}'
+          remote_path: '${{ secrets.REMOTE_FILE_TARGET }}/weixin'
 
 
   deploy:
@@ -75,8 +72,12 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }} # 服务器密码；需要去仓库的 settings/secrets/actions 去创建
           port: ${{ secrets.REMOTE_PORT }} # 服务器端口，默认22；需要去仓库的 settings/secrets/actions 去创建
           script: |
-            echo "开始本地打包"
-            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker build -t ghcr.io/jiahangchun/weixin:main ${{ secrets.REMOTE_FILE_TARGET }}/weixin
+            cd ${{ secrets.REMOTE_FILE_TARGET }}/weixin
+            pwd
+            echo "开始本地打包maven"
+            mvn -B package --file pom.xml
+            echo "开始本地打包 docker image"
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker build -t ghcr.io/jiahangchun/weixin:main .
 
   start:
     runs-on: ubuntu-latest
