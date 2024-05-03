@@ -68,7 +68,15 @@ jobs:
             echo '删除本地镜像'
             exec bash
       - name: 打包本地镜像
-        run: echo '打包本地镜像'
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.REMOTE_IP_ADDRESS }} # 服务器ip地址 ; 需要去仓库的 settings/secrets/actions 去创建
+          username: ${{ secrets.REMOTE_USER_NAME }} # 服务器用户名称；需要去仓库的 settings/secrets/actions 去创建
+          password: ${{ secrets.REMOTE_PASSWORD }} # 服务器密码；需要去仓库的 settings/secrets/actions 去创建
+          port: ${{ secrets.REMOTE_PORT }} # 服务器端口，默认22；需要去仓库的 settings/secrets/actions 去创建
+          script: |
+            echo "开始本地打包"
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker build -t ghcr.io/jiahangchun/weixin:main ${{ secrets.REMOTE_FILE_TARGET }}/weixin
 
   start:
     runs-on: ubuntu-latest
