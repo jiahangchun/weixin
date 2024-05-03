@@ -95,7 +95,9 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }} # 服务器密码；需要去仓库的 settings/secrets/actions 去创建
           port: ${{ secrets.REMOTE_PORT }} # 服务器端口，默认22；需要去仓库的 settings/secrets/actions 去创建
           script: |
-            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh ${{ secrets.REMOTE_FILE_TARGET }}/nas_tool/start.sh
+            cd ${{ secrets.REMOTE_FILE_TARGET }}/nas_tool
+            pwd
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S sh start.sh
             echo '启动项目'
             exec bash
 
