@@ -1,5 +1,5 @@
 # 避免从远程仓库下载文件
-name: 創建远程 docker image
+name: 創建本地 docker image
 
 # 當docker分支推送代碼時，自動生成docker image
 on:
