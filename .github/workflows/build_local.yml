@@ -21,19 +21,19 @@ jobs:
     steps:
       - name: 拉代碼
         uses: actions/checkout@v4
-    
+
       - name: 设置java版本
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '17'
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: 将文件转移到服务器
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:  
-          username: '${{ secrets.REMOTE_USER_NAME }}'  
+        with:
+          username: '${{ secrets.REMOTE_USER_NAME }}'
           server: '${{ secrets.REMOTE_IP_ADDRESS }}'
           port: '${{ secrets.REMOTE_PORT }}'
           password: '${{ secrets.REMOTE_PASSWORD }}'
@@ -101,4 +101,4 @@ jobs:
             echo '启动项目'
             exec bash
 
-      
+
