@@ -2,6 +2,7 @@ package com.github.binarywang.demo.wx.cp.config.single;
 
 import com.github.binarywang.demo.wx.cp.handler.*;
 import com.google.common.collect.Maps;
+import jakarta.annotation.PostConstruct;
 import lombok.val;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -10,8 +11,9 @@ import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -20,8 +22,8 @@ import java.util.stream.Collectors;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-//@Configuration
-//@EnableConfigurationProperties(WxCpProperties.class)
+@Configuration
+@EnableConfigurationProperties(WxCpProperties.class)
 public class WxCpConfiguration {
     private LogHandler logHandler;
     private NullHandler nullHandler;

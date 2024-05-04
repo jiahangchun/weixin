@@ -7,8 +7,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>3.0.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
 
     <groupId>jiahangchun</groupId>
     <version>1.0.0-SNAPSHOT</version>
@@ -25,24 +27,60 @@
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.locales>zh_CN</project.build.locales>
-
+        <nacos-config-spring-boot.version>0.2.11</nacos-config-spring-boot.version>
         <spring-redis-version>2.2.4.RELEASE</spring-redis-version>
         <redisson-version>3.10.6</redisson-version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.mysql</groupId>-->
+<!--            <artifactId>mysql-connector-j</artifactId>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>2022.0.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>2023.0.1.0</version>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
         </dependency>
 
         <dependency>
@@ -52,33 +90,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <version>3.1.4</version>
         </dependency>
-
-        <!-- Testing Dependencies -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- redis -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-            <version>${spring-redis-version}</version>
-        </dependency>
-
-        <!-- redisson -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-            <version>${redisson-version}</version>
-        </dependency>
-
-
     </dependencies>
 
     <build>
@@ -90,9 +105,7 @@
         </plugins>
     </build>
 
-<!--    git package: https://docs.github.com/zh/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry-->
-<!--git action 配合 git package : https://docs.github.com/zh/actions/publishing-packages/publishing-java-packages-with-maven-->
-<!--git package 相关配置-->
+
     <distributionManagement>
         <repository>
             <id>github</id>
@@ -100,48 +113,4 @@
             <url>https://maven.pkg.github.com/jiahangchun/weixin</url>
         </repository>
     </distributionManagement>
-
-<!--nexus 相关配置-->
-    <!--下载jar 配置教程 https://blog.csdn.net/kongliand/article/details/109893000 -->
-    <!--上传文件包 配置教程 https://blog.csdn.net/BThinker/article/details/123688143-->
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>maven-public</id>-->
-<!--            <name>jiahangchunNexus</name>-->
-<!--            <url>http://nexus.jiahangchun.icu:9001/repository/maven-public/</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--        </repository>-->
-<!--    </repositories>-->
-<!--    <pluginRepositories>-->
-<!--        <pluginRepository>-->
-<!--            <id>maven-public</id>-->
-<!--            <name>jiahangchunNexus</name>-->
-<!--            <url>http://nexus.jiahangchun.icu:9001/repository/maven-public/</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--            <releases>-->
-<!--                <enabled>true</enabled>-->
-<!--            </releases>-->
-<!--        </pluginRepository>-->
-<!--    </pluginRepositories>-->
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>custom_releases</id>-->
-<!--            <name>Nexus Release Repository</name>-->
-<!--            <url>http://nexus.jiahangchun.icu:9001/repository/maven-releases/</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>custom_snapshots</id>-->
-<!--            <name>Nexus Snapshot Repository</name>-->
-<!--            <url>http://nexus.jiahangchun.icu:9001/repository/maven-snapshots/</url>-->
-<!--        </snapshotRepository>-->
-<!--    </distributionManagement>-->
-
-
 </project>
