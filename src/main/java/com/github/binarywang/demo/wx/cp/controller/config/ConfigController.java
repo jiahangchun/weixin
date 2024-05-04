@@ -19,7 +19,7 @@ public class ConfigController {
     @Value("${test.name}")
     private String userName;
 
-    @Value("${wechat.cp.appConfigs.agentId}")
+    @Value("${wechat.cp.appConfigs[0].agentId}")
     private String agentId;
 
 
