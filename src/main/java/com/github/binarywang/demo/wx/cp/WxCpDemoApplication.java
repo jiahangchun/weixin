@@ -9,6 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@EnableDiscoveryClient
 @SpringBootApplication
 public class WxCpDemoApplication {
 
