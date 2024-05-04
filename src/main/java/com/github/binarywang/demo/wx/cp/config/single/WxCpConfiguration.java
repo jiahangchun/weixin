@@ -2,6 +2,7 @@ package com.github.binarywang.demo.wx.cp.config.single;
 
 import com.github.binarywang.demo.wx.cp.handler.*;
 import com.google.common.collect.Maps;
+import jakarta.annotation.PostConstruct;
 import lombok.val;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -11,7 +12,6 @@ import me.chanjar.weixin.cp.constant.WxCpConsts;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.stream.Collectors;
 

@@ -7,3 +7,5 @@ application.yml
 *.iml
 /weixin-java-cp-demo.ipr
 /weixin-java-cp-demo.iws
+/demo.ipr
+/demo.iws
