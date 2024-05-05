@@ -19,7 +19,6 @@ import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
  */
 @Slf4j
 public class EnterAgentHandler extends AbstractHandler {
-    private static final int TEST_AGENT = 1000002;
 
     @Override
     public WxCpXmlOutMessage handle(WxCpXmlMessage wxMessage, Map<String, Object> context, WxCpService wxCpService, WxSessionManager sessionManager) throws WxErrorException {
