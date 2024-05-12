@@ -20,3 +20,7 @@ services:
 # docker images 查看当前镜像
 # docker log <contain_id> 查看当前日志
 
+
+# 代码部署位置
+# /home/jiahangchun/code/action_file
+
