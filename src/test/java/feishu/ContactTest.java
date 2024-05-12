@@ -3,8 +3,9 @@ package feishu;
 import com.lark.oapi.Client;
 import com.lark.oapi.core.response.BaseResponse;
 import com.lark.oapi.core.utils.Jsons;
-import feishu.composite_api.contact.Contact;
-import feishu.composite_api.contact.ListUserByDepartmentRequest;
+import third.feishu.Config;
+import third.feishu.composite_api.contact.Contact;
+import third.feishu.composite_api.contact.ListUserByDepartmentRequest;
 import org.junit.Test;
 
 public class ContactTest {

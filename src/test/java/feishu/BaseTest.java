@@ -6,8 +6,9 @@ import com.lark.oapi.core.utils.Jsons;
 import com.lark.oapi.core.utils.Lists;
 import com.lark.oapi.service.bitable.v1.model.AppTableCreateHeader;
 import com.lark.oapi.service.bitable.v1.model.ReqTable;
-import feishu.composite_api.base.Base;
-import feishu.composite_api.base.CreateAppAndTablesRequest;
+import third.feishu.Config;
+import third.feishu.composite_api.base.Base;
+import third.feishu.composite_api.base.CreateAppAndTablesRequest;
 import org.junit.Test;
 
 public class BaseTest {

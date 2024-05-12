@@ -3,8 +3,9 @@ package feishu;
 import com.lark.oapi.Client;
 import com.lark.oapi.core.response.BaseResponse;
 import com.lark.oapi.core.utils.Jsons;
-import feishu.composite_api.sheets.CopyAndPasteByRangeRequest;
-import feishu.composite_api.sheets.Sheets;
+import third.feishu.Config;
+import third.feishu.composite_api.sheets.CopyAndPasteByRangeRequest;
+import third.feishu.composite_api.sheets.Sheets;
 import org.junit.Test;
 
 public class SheetsTest {

@@ -1,9 +1,10 @@
 package feishu;
 
 
-import feishu.composite_api.im.Im;
-import feishu.composite_api.im.SendFileRequest;
-import feishu.composite_api.im.SendImageRequest;
+import third.feishu.Config;
+import third.feishu.composite_api.im.Im;
+import third.feishu.composite_api.im.SendFileRequest;
+import third.feishu.composite_api.im.SendImageRequest;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
