@@ -74,9 +74,6 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
             <version>2023.0.1.0</version>
         </dependency>
-
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -93,6 +90,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
             <version>4.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.larksuite.oapi</groupId>
+            <artifactId>oapi-sdk</artifactId>
+            <version>2.2.6</version>
         </dependency>
     </dependencies>
 
