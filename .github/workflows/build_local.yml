@@ -30,15 +30,7 @@ jobs:
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-      - name: 将文件转移到服务器
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          username: '${{ secrets.REMOTE_USER_NAME }}'
-          server: '${{ secrets.REMOTE_IP_ADDRESS }}'
-          port: '${{ secrets.REMOTE_PORT }}'
-          password: '${{ secrets.REMOTE_PASSWORD }}'
-          local_path: './*'
-          remote_path: '${{ secrets.REMOTE_FILE_TARGET }}/weixin'
+      
 
 
   deploy:
@@ -63,7 +55,21 @@ jobs:
             echo '停止/删除 服务'
             echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S docker rmi ghcr.io/jiahangchun/weixin:main
             echo '删除本地镜像'
+            echo '${{ secrets.REMOTE_PASSWORD }}' | sudo -S rm -rf ${{ secrets.REMOTE_FILE_TARGET }}/weixin
+            echo '删除本地文件'
             exec bash
+
+
+      - name: 将文件转移到服务器
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: '${{ secrets.REMOTE_USER_NAME }}'
+          server: '${{ secrets.REMOTE_IP_ADDRESS }}'
+          port: '${{ secrets.REMOTE_PORT }}'
+          password: '${{ secrets.REMOTE_PASSWORD }}'
+          local_path: './*'
+          remote_path: '${{ secrets.REMOTE_FILE_TARGET }}/weixin'
+          
       - name: 打包本地镜像
         uses: appleboy/ssh-action@v0.1.10
         with:
