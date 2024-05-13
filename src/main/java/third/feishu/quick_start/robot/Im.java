@@ -2,6 +2,7 @@ package third.feishu.quick_start.robot;
 
 import com.lark.oapi.Client;
 import com.lark.oapi.service.im.v1.model.*;
+import java.io.File;
 import third.feishu.Config;
 
 import java.io.*;

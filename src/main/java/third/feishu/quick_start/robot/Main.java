@@ -1,6 +1,5 @@
 package third.feishu.quick_start.robot;
 
-import com.lark.oapi.sdk.servlet.ext.ServletAdapter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +19,4 @@ public class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    @Bean
-    public ServletAdapter getServletAdapter() {
-        return new ServletAdapter();
-    }
 }

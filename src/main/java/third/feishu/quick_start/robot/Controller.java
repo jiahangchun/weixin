@@ -2,23 +2,16 @@ package third.feishu.quick_start.robot;
 
 import com.lark.oapi.card.CardActionHandler;
 import com.lark.oapi.event.EventDispatcher;
-import com.lark.oapi.sdk.servlet.ext.ServletAdapter;
-import com.lark.oapi.service.im.v1.ImService;
+import com.lark.oapi.service.im.ImService;
 import com.lark.oapi.service.im.v1.model.EventMessage;
 import com.lark.oapi.service.im.v1.model.GetChatRespBody;
 import com.lark.oapi.service.im.v1.model.P2MessageReceiveV1;
-import third.feishu.Config;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import third.feishu.Config;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class Controller {
-    @Autowired
-    private ServletAdapter servletAdapter;
 
     private final EventDispatcher EVENT_DISPATCHER = EventDispatcher.newBuilder(Config.VERIFICATION_TOKEN, Config.ENCRYPT_KEY)
             .onP2MessageReceiveV1(new ImService.P2MessageReceiveV1Handler() {
@@ -65,16 +58,16 @@ public class Controller {
 
                 return null;
             }).build();
-
-    @RequestMapping("/event")
-    public void event(HttpServletRequest request, HttpServletResponse response)
-            throws Throwable {
-        servletAdapter.handleEvent(request, response, EVENT_DISPATCHER);
-    }
-
-    @RequestMapping("/card")
-    public void card(HttpServletRequest request, HttpServletResponse response)
-            throws Throwable {
-        servletAdapter.handleCardAction(request, response, CARD_ACTION_HANDLER);
-    }
+//
+//    @RequestMapping("/event")
+//    public void event(HttpServletRequest request, HttpServletResponse response)
+//            throws Throwable {
+//        servletAdapter.handleEvent(request, response, EVENT_DISPATCHER);
+//    }
+//
+//    @RequestMapping("/card")
+//    public void card(HttpServletRequest request, HttpServletResponse response)
+//            throws Throwable {
+//        servletAdapter.handleCardAction(request, response, CARD_ACTION_HANDLER);
+//    }
 }

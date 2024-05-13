@@ -1,6 +1,9 @@
 package feishu;
 
 
+import com.lark.oapi.Client;
+import com.lark.oapi.core.response.BaseResponse;
+import com.lark.oapi.core.utils.Jsons;
 import third.feishu.Config;
 import third.feishu.composite_api.im.Im;
 import third.feishu.composite_api.im.SendFileRequest;
