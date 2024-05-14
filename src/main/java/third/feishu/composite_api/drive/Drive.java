@@ -3,6 +3,7 @@ package third.feishu.composite_api.drive;
 import com.lark.oapi.Client;
 import com.lark.oapi.service.drive.v1.enums.FileUploadInfoParentTypeEnum;
 import com.lark.oapi.service.drive.v1.model.*;
+import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

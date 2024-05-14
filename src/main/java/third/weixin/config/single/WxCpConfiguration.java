@@ -14,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import third.weixin.handler.*;
-import weixin.handler.*;
-
-
 import java.util.Map;
 import java.util.stream.Collectors;
 
