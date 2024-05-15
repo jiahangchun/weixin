@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import third.feishu.config.ClientConfig;
 import third.feishu.config.FeishuConfig;
 
 /**
@@ -30,12 +31,13 @@ public class EventController {
     @Autowired
     private ServletAdapter servletAdapter;
     @Autowired
-    private FeishuConfig feishuConfig;
+    private ClientConfig clientConfig;
+
 
     //1. 注册消息处理器
     private final EventDispatcher EVENT_DISPATCHER
-        = EventDispatcher.newBuilder(feishuConfig.getVerificationToken(),
-            feishuConfig.getEncryptKey())
+        = EventDispatcher.newBuilder(clientConfig.getFeishuConfig().getVerificationToken(),
+            clientConfig.getFeishuConfig().getEncryptKey())
         .onP2MessageReceiveV1(new ImService.P2MessageReceiveV1Handler() {
             @Override
             public void handle(P2MessageReceiveV1 event) {
