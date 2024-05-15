@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import third.weixin.config.single.WxCpProperties;
+import third.weixin.handler.LogHandler;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,10 +21,14 @@ import third.weixin.config.single.WxCpProperties;
 @EnableConfigurationProperties(FeishuConfig.class)
 public class ClientConfig implements InitializingBean {
 
-    @Autowired
     private FeishuConfig feishuConfig;
 
-    private Client client=null;
+    private Client client = null;
+
+    @Autowired
+    public ClientConfig(FeishuConfig feishuConfig) {
+        this.feishuConfig = feishuConfig;
+    }
 
 
     @Override
