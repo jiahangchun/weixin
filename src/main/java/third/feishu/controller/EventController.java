@@ -34,44 +34,12 @@ public class EventController {
     private ClientConfig clientConfig;
 
 
-    //1. 注册消息处理器
-    private final EventDispatcher EVENT_DISPATCHER
-        = EventDispatcher.newBuilder(clientConfig.getFeishuConfig().getVerificationToken(),
-            clientConfig.getFeishuConfig().getEncryptKey())
-        .onP2MessageReceiveV1(new ImService.P2MessageReceiveV1Handler() {
-            @Override
-            public void handle(P2MessageReceiveV1 event) {
-                log.info(Jsons.DEFAULT.toJson(event));
-            }
-        }).onP2UserCreatedV3(new ContactService.P2UserCreatedV3Handler() {
-            @Override
-            public void handle(P2UserCreatedV3 event) {
-                log.info(Jsons.DEFAULT.toJson(event));
-                log.info(event.getRequestId());
-            }
-        })
-        .onP2MessageReadV1(new ImService.P2MessageReadV1Handler() {
-            @Override
-            public void handle(P2MessageReadV1 event) {
-                log.info(Jsons.DEFAULT.toJson(event));
-                log.info(event.getRequestId());
-            }
-        }).onP1MessageReadV1(new ImService.P1MessageReadV1Handler() {
-            @Override
-            public void handle(P1MessageReadV1 event) {
-                log.info(Jsons.DEFAULT.toJson(event));
-                log.info(event.getRequestId());
-            }
-        })
-        .build();
-
-
 
     //3. 创建路由处理器
     @RequestMapping("/webhook/event")
     public void event(HttpServletRequest request, HttpServletResponse response)
         throws Throwable {
         //3.1 回调扩展包提供的事件回调处理器
-        servletAdapter.handleEvent(request, response, EVENT_DISPATCHER);
+        servletAdapter.handleEvent(request, response, clientConfig.getEventDispatcher());
     }
 }
