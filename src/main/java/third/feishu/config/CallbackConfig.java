@@ -1,7 +1,7 @@
 package third.feishu.config;
 
+import com.lark.oapi.Client;
 import com.lark.oapi.sdk.servlet.ext.ServletAdapter;
-import com.lark.oapi.ws.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,16 @@ import org.springframework.context.annotation.Configuration;
 public class CallbackConfig {
 
     @Autowired
-    private ClientConfig clientConfig;
+    private FeishuConfig feishuConfig;
+
+    /**
+     * 自建应用获取处理器
+     * @return
+     */
+    @Bean
+    public Client getClient() {
+        return Client.newBuilder(feishuConfig.getAppId(), feishuConfig.getAppSecret()).build();
+    }
 
 
     @Bean

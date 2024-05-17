@@ -2,6 +2,7 @@ package third.feishu.config;
 
 import com.lark.oapi.card.CardActionHandler;
 import com.lark.oapi.card.model.CardAction;
+import com.lark.oapi.card.model.MessageCard;
 import com.lark.oapi.core.utils.Jsons;
 import com.lark.oapi.event.EventDispatcher;
 import com.lark.oapi.service.contact.ContactService;
@@ -53,9 +54,18 @@ public class ClientConfig implements InitializingBean {
                 new CardActionHandler.ICardHandler() {
                     @Override
                     public Object handle(CardAction cardAction) {
-                        System.out.println(Jsons.DEFAULT.toJson(cardAction));
-                        System.out.println(cardAction.getRequestId());
+                        System.out.println(LOG_PRE+Jsons.DEFAULT.toJson(cardAction));
+                        System.out.println(LOG_PRE+cardAction.getRequestId());
+
                         return null;
+                        // 1.2 构建响应卡片内容
+//                        MessageCard card = MessageCard.newBuilder()
+//                            .cardLink("wwww.baidu.com")
+//                            .config(config)
+//                            .header(header)
+//                            .elements(new MessageCardElement[]{div, note, image, cardAction, hr})
+//                            .build();
+//                        return card;
                     }
                 }).build();
             return cardActionHandler;
@@ -82,6 +92,9 @@ public class ClientConfig implements InitializingBean {
                     public void handle(P2MessageReceiveV1 event) {
                         System.out.println(LOG_PRE + Jsons.DEFAULT.toJson(event));
                         System.out.println(LOG_PRE + event.getRequestId());
+
+
+
                     }
                 }).onP2UserCreatedV3(new ContactService.P2UserCreatedV3Handler() {
                     @Override
