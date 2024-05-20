@@ -48,4 +48,11 @@ public class EventController {
         servletAdapter.handleCardAction(request, response, clientConfig.getCardActionHandler());
     }
 
+
+    @RequestMapping("/test")
+    public String test(HttpServletRequest request, HttpServletResponse response)
+        throws Throwable {
+       return "test";
+    }
+
 }
