@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import third.feishu.config.ClientConfig;
 
@@ -17,6 +19,7 @@ import third.feishu.config.ClientConfig;
 @RestController
 @Slf4j
 public class EventController {
+
     @Autowired
     private ClientConfig clientConfig;
 
@@ -25,6 +28,7 @@ public class EventController {
 
     /**
      * 事件路由器
+     *
      * @param request
      * @param response
      * @throws Throwable
@@ -37,6 +41,7 @@ public class EventController {
 
     /**
      * 卡片路由器
+     *
      * @param request
      * @param response
      * @throws Throwable
@@ -49,10 +54,10 @@ public class EventController {
     }
 
 
-    @RequestMapping("/test")
-    public String test(HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(@RequestParam String value)
         throws Throwable {
-       return "test";
+        return "test" + value;
     }
 
 }
