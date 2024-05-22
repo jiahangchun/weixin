@@ -50,7 +50,7 @@ public class ClientConfig implements InitializingBean {
             if (Objects.nonNull(cardActionHandler)) {
                 return cardActionHandler;
             }
-            cardActionHandler = CardActionHandler.newBuilder("v", "e",
+            cardActionHandler = CardActionHandler.newBuilder(feishuConfig.getVerificationToken(), feishuConfig.getEncryptKey(),
                 new CardActionHandler.ICardHandler() {
                     @Override
                     public Object handle(CardAction cardAction) {
