@@ -64,6 +64,7 @@ public class EventController {
             Decrypt d = new Decrypt(feishuConfig.getEncryptKey());
 
             String a = d.decrypt(value);
+            log.info("result a {}", a);
             CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
 
             CallbackResponse callbackResponse = new CallbackResponse();
