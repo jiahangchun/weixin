@@ -57,23 +57,19 @@ public class EventController {
      * @return
      */
     @RequestMapping(value = "/webhook/callback", method = RequestMethod.POST)
-    public CallbackResponse callback(HttpServletRequest request, HttpServletResponse response)
-        throws Throwable {
+    public CallbackResponse callback(@RequestBody CallbackReq callbackReq) {
         try {
+            log.info("callback {}", JsonUtils.toJson(callbackReq));
+            String value = callbackReq.getEncrypt();
+            Decrypt d = new Decrypt(feishuConfig.getEncryptKey());
 
-            servletAdapter.handleEvent(request, response, clientConfig.getEventDispatch());
+            String a = d.decrypt(value);
+            log.info("callback result {}", a);
+            CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
 
-//            log.info("callback {}", JsonUtils.toJson(callbackReq));
-//            String value = callbackReq.getEncrypt();
-//            Decrypt d = new Decrypt(feishuConfig.getEncryptKey());
-//
-//            String a = d.decrypt(value);
-//            log.info("result a {}", a);
-//            CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
-//
-//            CallbackResponse callbackResponse = new CallbackResponse();
-//            callbackResponse.setChallenge(callbackDto.getChallenge());
-            return null;
+            CallbackResponse callbackResponse = new CallbackResponse();
+            callbackResponse.setChallenge(callbackDto.getChallenge());
+            return callbackResponse;
         } catch (Exception e) {
             log.error("callback {}", e.getMessage(), e);
             return null;
@@ -95,11 +91,5 @@ public class EventController {
         servletAdapter.handleCardAction(request, response, clientConfig.getCardActionHandler());
     }
 
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test(@RequestParam String value)
-        throws Throwable {
-        return "test" + value;
-    }
 
 }
