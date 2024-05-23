@@ -57,19 +57,23 @@ public class EventController {
      * @return
      */
     @RequestMapping(value = "/webhook/callback", method = RequestMethod.POST)
-    public CallbackResponse callback(@RequestBody CallbackReq callbackReq) {
+    public CallbackResponse callback(HttpServletRequest request, HttpServletResponse response)
+        throws Throwable {
         try {
-            log.info("callback {}", JsonUtils.toJson(callbackReq));
-            String value = callbackReq.getEncrypt();
-            Decrypt d = new Decrypt(feishuConfig.getEncryptKey());
 
-            String a = d.decrypt(value);
-            log.info("result a {}", a);
-            CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
+            servletAdapter.handleEvent(request, response, clientConfig.getEventDispatch());
 
-            CallbackResponse callbackResponse = new CallbackResponse();
-            callbackResponse.setChallenge(callbackDto.getChallenge());
-            return callbackResponse;
+//            log.info("callback {}", JsonUtils.toJson(callbackReq));
+//            String value = callbackReq.getEncrypt();
+//            Decrypt d = new Decrypt(feishuConfig.getEncryptKey());
+//
+//            String a = d.decrypt(value);
+//            log.info("result a {}", a);
+//            CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
+//
+//            CallbackResponse callbackResponse = new CallbackResponse();
+//            callbackResponse.setChallenge(callbackDto.getChallenge());
+            return null;
         } catch (Exception e) {
             log.error("callback {}", e.getMessage(), e);
             return null;
