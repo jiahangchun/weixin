@@ -15,41 +15,43 @@ import java.util.List;
 @Data
 @ConfigurationProperties(prefix = "wechat.cp")
 public class WxCpProperties {
-  /**
-   * 设置企业微信的corpId
-   */
-  private String corpId="123456";
-
-  private List<AppConfig> appConfigs= Lists.newArrayList();
-
-  @Getter
-  @Setter
-  public static class AppConfig {
-    /**
-     * 设置企业微信应用的AgentId
-     */
-    private Integer agentId;
 
     /**
-     * 设置企业微信应用的Secret
+     * 设置企业微信的corpId
      */
-    private String secret;
+    private String corpId = "123456";
 
-    /**
-     * 设置企业微信应用的token
-     */
-    private String token;
+    private List<AppConfig> appConfigs = Lists.newArrayList();
 
-    /**
-     * 设置企业微信应用的EncodingAESKey
-     */
-    private String aesKey;
+    @Getter
+    @Setter
+    public static class AppConfig {
 
-  }
+        /**
+         * 设置企业微信应用的AgentId
+         */
+        private Integer agentId = 1;
 
-  @Override
-  public String toString() {
-    return JsonUtils.toJson(this);
-  }
+        /**
+         * 设置企业微信应用的Secret
+         */
+        private String secret = "2";
+
+        /**
+         * 设置企业微信应用的token
+         */
+        private String token = "3";
+
+        /**
+         * 设置企业微信应用的EncodingAESKey
+         */
+        private String aesKey = "4";
+
+    }
+
+    @Override
+    public String toString() {
+        return JsonUtils.toJson(this);
+    }
 
 }
