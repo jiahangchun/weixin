@@ -1,7 +1,16 @@
 package third.feishu.controller;
 
+import static com.lark.oapi.sdk.servlet.ext.ServletAdapter.HTTP_TRANSLATOR;
+
 import cn.hutool.json.JSONUtil;
+import com.lark.oapi.Client;
+import com.lark.oapi.core.request.EventReq;
+import com.lark.oapi.core.response.EventResp;
+import com.lark.oapi.sdk.servlet.ext.HttpTranslator;
 import com.lark.oapi.sdk.servlet.ext.ServletAdapter;
+import com.lark.oapi.service.im.v1.model.CreateMessageReq;
+import com.lark.oapi.service.im.v1.model.CreateMessageReqBody;
+import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -44,10 +53,34 @@ public class EventController {
      * @param response
      * @throws Throwable
      */
-    @RequestMapping("/webhook/event")
-    public void event(HttpServletRequest request, HttpServletResponse response)
-        throws Throwable {
-        servletAdapter.handleEvent(request, response, clientConfig.getEventDispatch());
+    @RequestMapping(value = "/webhook/event", method = RequestMethod.GET)
+    public void event(@RequestParam String sendMsg) {
+        Client client = clientConfig.getClient();
+        // 发送消息
+//        CreateMessageReq createMessageReq = CreateMessageReq.newBuilder()
+//            .receiveIdType(request.getReceiveIdType())
+//            .createMessageReqBody(CreateMessageReqBody.newBuilder()
+//                .receiveId(request.getReceiveId())
+//                .msgType("file")
+//                .content(Jsons.DEFAULT.toJson(createFileResp.getData()))
+//                .uuid(request.getUuid())
+//                .build())
+//            .build();
+//
+//        CreateMessageResp createMessageResp = client.im().message().create(createMessageReq);
+//        if (!createMessageResp.success()) {
+//            System.out.printf("client.im.message.create failed, code: %d, msg: %s, logId: %s%n",
+//                createMessageResp.getCode(), createMessageResp.getMsg(), createMessageResp.getRequestId());
+//            return createMessageResp;
+//        }
+//
+//        // 返回结果
+//        SendFileResponse response = new SendFileResponse();
+//        response.setCode(0);
+//        response.setMsg("success");
+//        response.setCreateFileResponse(createFileResp.getData());
+//        response.setCreateMessageResponse(createMessageResp.getData());
+
     }
 
     /**
@@ -59,17 +92,20 @@ public class EventController {
     @RequestMapping(value = "/webhook/callback", method = RequestMethod.POST)
     public CallbackResponse callback(@RequestBody CallbackReq callbackReq) {
         try {
-            log.info("callback {}", JsonUtils.toJson(callbackReq));
             String value = callbackReq.getEncrypt();
             Decrypt d = new Decrypt(feishuConfig.getEncryptKey());
 
             String a = d.decrypt(value);
             log.info("callback result {}", a);
-            CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
+            if(a.contains("challenge")){
+                CallbackDto callbackDto = JSONUtil.toBean(a, CallbackDto.class);
+                CallbackResponse callbackResponse = new CallbackResponse();
+                callbackResponse.setChallenge(callbackDto.getChallenge());
+                return callbackResponse;
+            }else{
 
-            CallbackResponse callbackResponse = new CallbackResponse();
-            callbackResponse.setChallenge(callbackDto.getChallenge());
-            return callbackResponse;
+            }
+
         } catch (Exception e) {
             log.error("callback {}", e.getMessage(), e);
             return null;
@@ -87,6 +123,15 @@ public class EventController {
     @RequestMapping("/webhook/card")
     public void card(HttpServletRequest request, HttpServletResponse response)
         throws Throwable {
+
+        EventReq req = new EventReq();
+        req.setHeaders(toHeaderMap(request));
+        req.setBody(bodyStr.getBytes(StandardCharsets.UTF_8));
+        req.setHttpPath(request.getRequestURI());
+
+        // 处理请求
+        EventResp resp = handler.handle(eventReq);
+
         //3.1 回调扩展包卡片行为处理回调
         servletAdapter.handleCardAction(request, response, clientConfig.getCardActionHandler());
     }

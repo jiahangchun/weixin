@@ -1,5 +1,6 @@
 package third.feishu.config;
 
+import com.lark.oapi.Client;
 import com.lark.oapi.card.CardActionHandler;
 import com.lark.oapi.card.model.CardAction;
 import com.lark.oapi.card.model.MessageCard;
@@ -37,6 +38,30 @@ public class ClientConfig implements InitializingBean {
     private static final String LOG_PRE = "===================>";
 
 
+    // 默认配置为自建应用
+    Client client = null;
+
+
+    /**
+     * 获取飞书执行器
+     * @return
+     */
+    public synchronized Client getClient() {
+        if (Objects.nonNull(client)) {
+            return client;
+        }
+        synchronized (ClientConfig.class) {
+            if (Objects.nonNull(client)) {
+                return client;
+            }
+            client = Client.newBuilder(feishuConfig.getAppId(), feishuConfig.getAppSecret())
+                .logReqAtDebug(true)
+                .build();
+            return client;
+        }
+    }
+
+
     /**
      * 卡片处理器
      *
@@ -50,12 +75,13 @@ public class ClientConfig implements InitializingBean {
             if (Objects.nonNull(cardActionHandler)) {
                 return cardActionHandler;
             }
-            cardActionHandler = CardActionHandler.newBuilder(feishuConfig.getVerificationToken(), feishuConfig.getEncryptKey(),
+            cardActionHandler = CardActionHandler.newBuilder(feishuConfig.getVerificationToken(),
+                feishuConfig.getEncryptKey(),
                 new CardActionHandler.ICardHandler() {
                     @Override
                     public Object handle(CardAction cardAction) {
-                        System.out.println(LOG_PRE+Jsons.DEFAULT.toJson(cardAction));
-                        System.out.println(LOG_PRE+cardAction.getRequestId());
+                        System.out.println(LOG_PRE + Jsons.DEFAULT.toJson(cardAction));
+                        System.out.println(LOG_PRE + cardAction.getRequestId());
 
                         return null;
                         // 1.2 构建响应卡片内容
@@ -92,7 +118,6 @@ public class ClientConfig implements InitializingBean {
                     public void handle(P2MessageReceiveV1 event) {
                         System.out.println(LOG_PRE + Jsons.DEFAULT.toJson(event));
                         System.out.println(LOG_PRE + event.getRequestId());
-
 
 
                     }
