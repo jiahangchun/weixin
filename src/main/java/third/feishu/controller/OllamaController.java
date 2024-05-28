@@ -36,6 +36,49 @@ public class OllamaController {
     private EmbeddingClient embeddingClient;
     @Autowired
     private OllamaChatClient chatClient;
+    @Autowired
+    private SeleniumController seleniumController;
+
+
+    @GetMapping("/ai/name")
+    public String name(@RequestParam(value = "message", defaultValue = "你猜后续会怎么发展？请用200字描述下") String message) {
+        return chatClient.call(message);
+    }
+
+
+    @GetMapping("/ai/novel")
+    public String novel(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
+        String introduce=chatClient.call("我给你将个小说吧,之后你需要假设你是个小说家，帮助我推演后续的内容。可以吗？");
+        seleniumController.getNovel1(1);
+        return introduce;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @GetMapping("/ai/embedding")
@@ -56,13 +99,7 @@ public class OllamaController {
     }
 
 
-    @GetMapping("/ai/name")
-    public String name(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
-        return chatClient.call("生成5个著名海盗的姓名。");
-    }
-
-
-    //手动色荷治
+    //手动设置
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(@RequestParam String value) {
