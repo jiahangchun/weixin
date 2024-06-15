@@ -54,9 +54,7 @@ public class ClientConfig implements InitializingBean {
             if (Objects.nonNull(client)) {
                 return client;
             }
-            client = Client.newBuilder(feishuConfig.getAppId(), feishuConfig.getAppSecret())
-                .logReqAtDebug(true)
-                .build();
+            client = Client.newBuilder(feishuConfig.getAppId(), feishuConfig.getAppSecret()).build();
             return client;
         }
     }

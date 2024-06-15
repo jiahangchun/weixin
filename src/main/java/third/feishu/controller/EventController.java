@@ -1,7 +1,5 @@
 package third.feishu.controller;
 
-import static com.lark.oapi.sdk.servlet.ext.ServletAdapter.HTTP_TRANSLATOR;
-
 import cn.hutool.json.JSONUtil;
 import com.lark.oapi.Client;
 import com.lark.oapi.core.request.EventReq;
@@ -48,10 +46,6 @@ public class EventController {
 
     /**
      * 事件路由器
-     *
-     * @param request
-     * @param response
-     * @throws Throwable
      */
     @RequestMapping(value = "/webhook/event", method = RequestMethod.GET)
     public void event(@RequestParam String sendMsg) {
@@ -103,38 +97,11 @@ public class EventController {
                 callbackResponse.setChallenge(callbackDto.getChallenge());
                 return callbackResponse;
             }else{
-
+                return null;
             }
-
         } catch (Exception e) {
             log.error("callback {}", e.getMessage(), e);
             return null;
         }
     }
-
-
-    /**
-     * 卡片路由器
-     *
-     * @param request
-     * @param response
-     * @throws Throwable
-     */
-    @RequestMapping("/webhook/card")
-    public void card(HttpServletRequest request, HttpServletResponse response)
-        throws Throwable {
-
-        EventReq req = new EventReq();
-        req.setHeaders(toHeaderMap(request));
-        req.setBody(bodyStr.getBytes(StandardCharsets.UTF_8));
-        req.setHttpPath(request.getRequestURI());
-
-        // 处理请求
-        EventResp resp = handler.handle(eventReq);
-
-        //3.1 回调扩展包卡片行为处理回调
-        servletAdapter.handleCardAction(request, response, clientConfig.getCardActionHandler());
-    }
-
-
 }
