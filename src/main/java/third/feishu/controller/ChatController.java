@@ -5,9 +5,13 @@ import com.google.common.collect.Lists;
 import com.lark.oapi.Client;
 import com.lark.oapi.core.utils.Jsons;
 import com.lark.oapi.service.contact.v3.model.*;
+import com.lark.oapi.service.im.v1.model.CreateImageReq;
+import com.lark.oapi.service.im.v1.model.CreateImageReqBody;
+import com.lark.oapi.service.im.v1.model.CreateImageResp;
 import com.lark.oapi.service.im.v1.model.CreateMessageReq;
 import com.lark.oapi.service.im.v1.model.CreateMessageReqBody;
 import com.lark.oapi.service.im.v1.model.CreateMessageResp;
+import java.io.File;
 import java.util.HashMap;
 import com.lark.oapi.core.request.RequestOptions;
 import java.util.List;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import third.feishu.config.ClientConfig;
 import third.feishu.controller.dto.BatchGetIdUserDto;
 import third.feishu.controller.dto.ChatMessageDto;
+import third.feishu.controller.dto.ImageContextDto;
 import third.feishu.controller.dto.TextContextDto;
 import third.feishu.controller.dto.UserInfoResp;
 import third.weixin.utils.JsonUtils;
@@ -133,6 +138,41 @@ public class ChatController {
         log.info("===============>" + Jsons.DEFAULT.toJson(resp.getData()));
     }
 
+
+    /**
+     * 向某人发送图片消息
+     */
+    @RequestMapping(value = "/send/image/message", method = RequestMethod.GET)
+    public void sendImageMessage(@RequestBody ChatMessageDto chatMessageDto) throws Exception {
+        // 构建client
+        Client client = clientConfig.getClient();
+        File image=new File("C:\\Users\\Administrator\\Desktop\\a.jpg");
+
+        // 创建请求对象
+        CreateImageReq req = CreateImageReq.newBuilder()
+            .createImageReqBody(CreateImageReqBody.newBuilder()
+                .imageType("message")
+                .image(image)
+                .build())
+            .build();
+
+        // 发起请求
+        CreateImageResp resp = client.im().image().create(req);
+
+
+        // 处理服务端错误
+        if (!resp.success()) {
+            System.out.println(
+                String.format("code:%s,msg:%s,reqId:%s", resp.getCode(), resp.getMsg(),
+                    resp.getRequestId()));
+            return;
+        }
+
+        // 业务数据处理
+        log.info("===============>" + Jsons.DEFAULT.toJson(resp.getData()));
+    }
+
+
     /**
      * 发送text文本格式的消息
      *
@@ -146,6 +186,11 @@ public class ChatController {
                 TextContextDto textContextDto = new TextContextDto();
                 textContextDto.setText(value);
                 return JsonUtils.toJson(textContextDto);
+            }
+            case "image": {
+                ImageContextDto imageContextDto = new ImageContextDto();
+                imageContextDto.setImage_key(value);
+                return JsonUtils.toJson(imageContextDto);
             }
             default:
                 return "";

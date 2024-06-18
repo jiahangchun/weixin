@@ -32,6 +32,20 @@ public class ChatControllerTest {
     }
 
 
+
+    @Test
+    public void sendImageMessage() throws Exception {
+        ChatMessageDto dto=new ChatMessageDto();
+        dto.setMessage("img_v3_02bv_c9b3efc1-10a8-4262-8628-66e2ce02d2eg");
+        dto.setUserId("cbe8c91c");
+        dto.setMsgType("image");
+        dto.setSeed(UUID.randomUUID().toString());
+//        chatController.sendImageMessage(dto);
+        chatController.sendChatMessage(dto);
+    }
+
+
+
     @Test
     public void batchGetIdUser() throws Exception {
         BatchGetIdUserDto dto=new BatchGetIdUserDto();
