@@ -123,28 +123,56 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!--使用docker-maven-plugin插件-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <!--指定生成的镜像名-->
+                    <imageName>${project.artifactId}</imageName>
+                    <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
+                    <dockerDirectory>${basedir}</dockerDirectory>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                    </imageTags>
+                    <!--FIXME 指定远程 docker api地址 ,此举目的是将构建好的镜像推送至远程的Docker服务器 ,  前提是服务器开启远程连接 -->
+                    <dockerHost>http://127.0.0.0:2375</dockerHost>
+                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <!--jar 包所在的路径  此处配置的 即对应 target 目录-->
+                            <directory>${project.build.directory}</directory>
+                            <!--用于指定需要复制的文件 需要包含的 jar包 ，这里对应的是 Dockerfile中添加的文件名　-->
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+                <!--将插件绑定在某个phase执行-->
+                <executions>
+                    <execution>
+                        <id>build-image</id>
+                        <!--用户只需执行mvn deploy ，就会自动执行mvn docker:build-->
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
-<!--    <dependencyManagement>-->
-<!--        <dependencies>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.ai</groupId>-->
-<!--                <artifactId>spring-ai-bom</artifactId>-->
-<!--                <version>0.8.1-SNAPSHOT</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--        </dependencies>-->
-<!--    </dependencyManagement>-->
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/jiahangchun/weixin</url>
-        </repository>
-    </distributionManagement>
+<!--    配合git action , 但是由于github 不稳定，暂时打算迁移到 gitlab -->
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>github</id>-->
+<!--            <name>GitHub Packages</name>-->
+<!--            <url>https://maven.pkg.github.com/jiahangchun/weixin</url>-->
+<!--        </repository>-->
+<!--    </distributionManagement>-->
 
 
     <repositories>

@@ -1,8 +1,11 @@
 FROM openjdk:17-jdk
 MAINTAINER jiahangchun
 
+#对时作用
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 # docker build --build-arg SNAPSHOT_VERSION=0.0.2-SNAPSHOT -t myapp:latest .
-ARG PORT=8082
+ARG PORT=8080
 
 
 RUN echo "用户 ""$USER"" 打包文件"

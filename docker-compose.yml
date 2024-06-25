@@ -15,6 +15,15 @@ services:
         networks:
             - traefik
 
+#可能最终还是要改成这种方式
+#先通过pom中插件，mvn clean package install deploy
+#再通过pom中docker插件进行打包镜像操作，然后push到远程仓库
+#最后debug时根据 镜像名称 启动
+# 这样就运行到最新的代码了
+#    web:
+#        image: test3
+#        ports:
+#            - "9303:8080"
 
 networks:
     traefik:
