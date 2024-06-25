@@ -2,7 +2,7 @@ FROM openjdk:17-jdk
 MAINTAINER jiahangchun
 
 # docker build --build-arg SNAPSHOT_VERSION=0.0.2-SNAPSHOT -t myapp:latest .
-ARG PORT=8080
+ARG PORT=8082
 
 
 RUN echo "用户 ""$USER"" 打包文件"

@@ -1,10 +1,24 @@
 version: '3'
 services:
-    web:
-        image: test3
+    weixin_test2:
+        build: # 构建自定义镜像
+            context: .                 # 指定Dockerfile文件所在路径
+            dockerfile: Dockerfile         # 指定Dockerfile文件名称
+        container_name: weixin_test2
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.weixin.rule=Host(`weixin_test2.jiahangchun.icu`)"
         ports:
-            - "9303:8080"
+            - 11111:8080
+        environment:
+            TZ: Asia/Shanghai
+        networks:
+            - traefik
 
+
+networks:
+    traefik:
+        external: true
 
 # 创建镜像
 # docker build -t test1 .
