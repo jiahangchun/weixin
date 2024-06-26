@@ -31,6 +31,10 @@
         <spring-redis-version>2.2.4.RELEASE</spring-redis-version>
         <redisson-version>3.10.6</redisson-version>
         <java.version>17</java.version>
+        <docker.username>nexus</docker.username>
+        <docker.password>nexusJia@</docker.password>
+        <docker.registry.url>nexus.jiahangchun.icu:9001</docker.registry.url>
+        <docker.namespace>blade</docker.namespace>
     </properties>
 
     <dependencies>
@@ -117,6 +121,23 @@
         </dependency>
     </dependencies>
 
+
+    <!--上传到nexus仓库中，配合mvn deploy:deploy-->
+    <distributionManagement>
+        <repository>
+            <!--这里的id需要和settings.xml中的server的id一致-->
+            <id>nexus-release-jia</id>
+            <name>Nexus release Repository</name>
+            <url>http://nexus.jiahangchun.icu:9001/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots-jia</id>
+            <name>Nexus snapshots Repository</name>
+            <url>http://nexus.jiahangchun.icu:9001/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
     <build>
         <plugins>
             <plugin>
@@ -124,44 +145,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!--使用docker-maven-plugin插件-->
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <!--指定生成的镜像名-->
-                    <imageName>${project.artifactId}</imageName>
-                    <!-- 指定 Dockerfile 路径 , 根据实际情况改动! ${project.basedir}：项目根路径-->
-                    <dockerDirectory>${basedir}</dockerDirectory>
-                    <imageTags>
-                        <imageTag>${project.version}</imageTag>
-                    </imageTags>
-                    <!--FIXME 指定远程 docker api地址 ,此举目的是将构建好的镜像推送至远程的Docker服务器 ,  前提是服务器开启远程连接 -->
-                    <dockerHost>http://127.0.0.0:2375</dockerHost>
-                    <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <!--jar 包所在的路径  此处配置的 即对应 target 目录-->
-                            <directory>${project.build.directory}</directory>
-                            <!--用于指定需要复制的文件 需要包含的 jar包 ，这里对应的是 Dockerfile中添加的文件名　-->
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
-                <!--将插件绑定在某个phase执行-->
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <!--用户只需执行mvn deploy ，就会自动执行mvn docker:build-->
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
 
